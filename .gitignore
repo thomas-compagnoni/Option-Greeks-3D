@@ -1,5 +1,3 @@
-venv/
-*.pyc
-.env
-.DS_Store
-cache/
+cache
+__pycache__
+.gitignore
