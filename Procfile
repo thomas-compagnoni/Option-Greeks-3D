@@ -1,1 +1,1 @@
-web: gunicorn layout:server
+web: gunicorn --chdir script layout:server
