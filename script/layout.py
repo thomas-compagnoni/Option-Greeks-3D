@@ -4,7 +4,7 @@ from math import log, exp, pow, sqrt
 import numpy as np
 import pandas as pd
 from scipy.stats import norm
-
+print('a')
 from dash import Dash, dcc, html, ctx, DiskcacheManager, CeleryManager
 from dash.dependencies import Input, State, Output
 from dash.exceptions import PreventUpdate
