@@ -1,3 +1,12 @@
+from math import log, exp, pow, sqrt
+
+import numpy as np
+import pandas as pd
+from scipy.stats import norm
+
+from utils import *
+
+
 def call_black_scholes_merton(*args):
     S, K, r, volatility, T = args[0]
 

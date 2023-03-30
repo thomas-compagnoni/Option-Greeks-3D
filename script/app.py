@@ -1,20 +1,10 @@
 import os
-from math import log, exp, pow, sqrt
 
-import numpy as np
-import pandas as pd
-from scipy.stats import norm
-
-from dash import Dash, dcc, html, ctx, DiskcacheManager, CeleryManager, dash_table
+from dash import Dash, DiskcacheManager, CeleryManager
 from dash.dependencies import Input, State, Output
 from dash.exceptions import PreventUpdate
 
-import dash_daq as daq
-
-import plotly.graph_objects as go
-from itertools import repeat
-
-from black_scholes_functions import *
+from constants import *
 from items import *
 from layout import *
 from utils import *
@@ -35,6 +25,9 @@ else:
 
 app = Dash(__name__, background_callback_manager=background_callback_manager, prevent_initial_callbacks=True)
 server = app.server
+
+app.layout = LAYOUT
+
 
 @app.callback(
     Output(component_id='price_', component_property='style'),
@@ -108,6 +101,7 @@ def update_output(on):
      Output(component_id='maturity_max', component_property='value'),
      Output(component_id='submit', component_property='n_clicks'),
      Output(component_id='example', component_property='style')
+
      ],
     Input(component_id='example', component_property='n_clicks'),
     background=True,
@@ -116,9 +110,9 @@ def update_output(on):
 def example(n_clicks):
     return True, False, False, False, True, 'call', 'theta', 10, 100, 50, 0.02, 0.25, 0.1, 3, 1, {'display': 'none'}
 
+
 @app.callback(
-    Output(component_id='loading', component_property='children'),
-    Output(component_id='tab_matrix', component_property='children'),
+    Output(component_id='loading_output', component_property='children'),
     Input(component_id='submit', component_property='n_clicks'),
     State(component_id='type', component_property='value'),
     State(component_id='result', component_property='value'),
@@ -148,9 +142,9 @@ def example(n_clicks):
     State(component_id='maturity_min', component_property='value'),
     State(component_id='maturity_max', component_property='value'),
     background=True,
-    running=[(Output("submit", "style"), button_style_off, button_style_on),
-             (Output("submit", "children"), 'Loading...', 'Submit'),
-             (Output("submit", "disabled"), True, False)]
+    running=[(Output("submit", "children"), 'Loading...', 'Submit'),
+             (Output("submit", "disabled"), True, False),
+             (Output("submit", "style"), button_style_off, button_style)]
 )
 def graph(n_clicks, type, on,
           onS, S, Sm, SM,
@@ -164,23 +158,12 @@ def graph(n_clicks, type, on,
     v = extract_value(onv, v, vm, vM)
     T = extract_value(onT, T, Tm, TM)
 
-    if all([type, on, S, K, r, v, T]):
-
-        dim = sum([1 for x in [S, K, r, v, T] if isinstance(x, tuple)])
-
-        if dim == 1:
-            result = sensitivity_2D(type, on, S, K, r, v, T)
-            figure = build_figure(result, on)
-            table = build_table(result, dim)
-            return figure, table
-        else:
-            result = sensitivity_3D(type, on, S, K, r, v, T)
-            figure = build_figure(result, on)
-            table = build_table(result, dim)
-            return figure, table
-    else:
+    try:
+        tabs = website_output(type, on, S, K, r, v, T)
+        return tabs
+    except Exception:
         raise PreventUpdate
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server()

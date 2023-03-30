@@ -1,6 +1,13 @@
-price = [html.P('Underlying price (S)',
-                style={'font-family': 'Arial', 'font-size': '15px', 'position': 'relative', 'top': 'px', 'margin': 'auto'}),
-         html.Div(
+from dash import dcc
+from dash.html import Div, P, Button
+
+import dash_daq as daq
+
+from constants import *
+
+price = [P('Underlying price (S)',
+           style={'font-family': 'Arial', 'font-size': '15px', 'position': 'relative', 'top': 'px', 'margin': 'auto'}),
+         Div(
              children=dcc.Input(
                  id='price',
                  type='number',
@@ -9,7 +16,7 @@ price = [html.P('Underlying price (S)',
                  style={'width': '90%', 'height': '20px', 'textAlign': 'center', 'display': 'inline-block',
                         'position': 'absolute', 'left': '7%', 'top': '25px'}),
              id='price_'),
-         html.Div(
+         Div(
              children=[
                  dcc.Input(
                      id='price_min',
@@ -29,9 +36,9 @@ price = [html.P('Underlying price (S)',
              style={'display': 'none'})
          ]
 
-strike = [html.P('Strike (K)',
-                 style={'font-family': 'Arial', 'font-size': '15px', 'position': 'relative', 'top': 'px', 'margin': 'auto'}),
-          html.Div(
+strike = [P('Strike (K)',
+            style={'font-family': 'Arial', 'font-size': '15px', 'position': 'relative', 'top': 'px', 'margin': 'auto'}),
+          Div(
               children=dcc.Input(
                   id='strike',
                   type='number',
@@ -40,7 +47,7 @@ strike = [html.P('Strike (K)',
                   style={'width': '90%', 'height': '20px', 'textAlign': 'center',
                          'position': 'absolute', 'left': '7%', 'top': '25px'}),
               id='strike_'),
-          html.Div(
+          Div(
               children=[
                   dcc.Input(
                       id='strike_min',
@@ -60,9 +67,9 @@ strike = [html.P('Strike (K)',
               style={'display': 'none'})
           ]
 
-rf = [html.P('Risk-free (r)',
-             style={'font-family': 'Arial', 'font-size': '15px', 'position': 'relative', 'top': 'px', 'margin': 'auto'}),
-      html.Div(
+rf = [P('Risk-free (r)',
+        style={'font-family': 'Arial', 'font-size': '15px', 'position': 'relative', 'top': 'px', 'margin': 'auto'}),
+      Div(
           children=dcc.Input(
               id='rf',
               type='number',
@@ -71,7 +78,7 @@ rf = [html.P('Risk-free (r)',
               style={'width': '90%', 'height': '20px', 'textAlign': 'center',
                      'position': 'absolute', 'left': '7%', 'top': '25px'}),
           id='rf_'),
-      html.Div(
+      Div(
           children=[
               dcc.Input(
                   id='rf_min',
@@ -91,9 +98,9 @@ rf = [html.P('Risk-free (r)',
           style={'display': 'none'})
       ]
 
-sigma = [html.P('Volatility (σ)',
-                style={'font-family': 'Arial', 'font-size': '15px', 'position': 'relative', 'top': 'px', 'margin': 'auto'}),
-         html.Div(
+sigma = [P('Volatility (σ)',
+           style={'font-family': 'Arial', 'font-size': '15px', 'position': 'relative', 'top': 'px', 'margin': 'auto'}),
+         Div(
              children=dcc.Input(
                  id='sigma',
                  type='number',
@@ -102,7 +109,7 @@ sigma = [html.P('Volatility (σ)',
                  style={'width': '90%', 'height': '20px', 'textAlign': 'center',
                         'position': 'absolute', 'left': '7%', 'top': '25px'}),
              id='sigma_'),
-         html.Div(
+         Div(
              children=[
                  dcc.Input(
                      id='sigma_min',
@@ -121,9 +128,9 @@ sigma = [html.P('Volatility (σ)',
              id='sigma_minmax',
              style={'display': 'none'})]
 
-maturity = [html.P('Maturity (T)',
-                   style={'font-family': 'Arial', 'font-size': '15px', 'position': 'relative', 'top': 'px', 'margin': 'auto'}),
-            html.Div(
+maturity = [P('Maturity (T)',
+              style={'font-family': 'Arial', 'font-size': '15px', 'position': 'relative', 'top': 'px', 'margin': 'auto'}),
+            Div(
                 children=dcc.Input(
                     id='maturity',
                     type='number',
@@ -132,7 +139,7 @@ maturity = [html.P('Maturity (T)',
                     style={'width': '90%', 'height': '20px', 'textAlign': 'center',
                            'position': 'absolute', 'left': '7%', 'top': '25px'}),
                 id='maturity_'),
-            html.Div(
+            Div(
                 children=[
                     dcc.Input(
                         id='maturity_min',
@@ -151,17 +158,16 @@ maturity = [html.P('Maturity (T)',
                 id='maturity_minmax',
                 style={'display': 'none'})]
 
-button_style_on = {'position': 'relative', 'top': '440px',
-                   'border': 'none', 'border-radius': '4px', 'height': '40px', 'width': '80%', 'padding': '0px 45px',
-                   'font-size': '20px', 'background-color': '#008CBA', 'color': 'white',
-                   'cursor': 'pointer'}
+button_style = {'position': 'relative', 'top': '440px',
+                'border': 'none', 'border-radius': '4px', 'height': '40px', 'width': '80%', 'padding': '0px 45px',
+                'font-size': '20px', 'background-color': '#008CBA', 'color': 'white',
+                'cursor': 'pointer'}
 
 button_style_off = {'position': 'relative', 'top': '440px',
                     'border': 'none', 'border-radius': '4px', 'height': '40px', 'width': '80%', 'padding': '0px 45px',
                     'font-size': '20px', 'background-color': '#008CBA', 'color': 'white'}
 
 variables_menu = [
-    # html.H3('Insert the variables required below'),
 
     dcc.Dropdown(
         id="type",
@@ -184,7 +190,7 @@ variables_menu = [
         placeholder="Select which option's greek to show",
         style={'position': 'relative', 'top': '25px', 'padding': '0px 35px', 'font-size': '15px'}),
 
-    html.Div(
+    Div(
         children=price,
         id='price_div',
         style={'width': '21.7%', 'height': '60px', 'position': 'absolute', 'top': '160px'}),
@@ -194,7 +200,7 @@ variables_menu = [
         color="green",
         style={'position': 'absolute', 'top': '185px', 'left': '23.5%'}),
 
-    html.Div(
+    Div(
         children=strike,
         id='strike_div',
         style={'width': '21.7%', 'height': '60px', 'position': 'absolute', 'top': '230px'}),
@@ -204,7 +210,7 @@ variables_menu = [
         color="green",
         style={'position': 'absolute', 'top': '255px', 'left': '23.5%'}),
 
-    html.Div(
+    Div(
         children=rf,
         id='rf_div',
         style={'width': '21.7%', 'height': '60px', 'position': 'absolute', 'top': '300px'}),
@@ -214,7 +220,7 @@ variables_menu = [
         color="green",
         style={'position': 'absolute', 'top': '325px', 'left': '23.5%'}),
 
-    html.Div(
+    Div(
         children=sigma,
         id='sigma_div',
         style={'width': '21.7%', 'height': '60px', 'position': 'absolute', 'top': '370px'}),
@@ -224,7 +230,7 @@ variables_menu = [
         color="green",
         style={'position': 'absolute', 'top': '395px', 'left': '23.5%'}),
 
-    html.Div(
+    Div(
         children=maturity,
         id='maturity_div',
         style={'width': '21.7%', 'height': '60px', 'position': 'absolute', 'top': '440px'}),
@@ -234,19 +240,36 @@ variables_menu = [
         color="green",
         style={'position': 'absolute', 'top': '465px', 'left': '23.5%'}),
 
-    html.Button(
+    Button(
         children='Submit',
         id='submit',
         n_clicks=0,
-        style=button_style_on
+        style=button_style
     )
 ]
 
-example_button = html.Button(
+example_button = Button(
     children='SHOW ME AN EXAMPLE',
     id='example',
     n_clicks=0,
     style={'position': 'absolute', 'top': '38%', 'left': '35%',
            'border': '3px solid blue', 'border-radius': '12px', 'background-color': 'white', 'height': '24%', 'width': '30%',
-           'font-size': '22px', 'color': 'blue',
-           'cursor': 'pointer'})
+           'font-size': '22px', 'color': 'blue', 'cursor': 'pointer'}
+)
+
+tabs_styles = {
+    'height': '50px'
+}
+tab_style = {
+    'borderBottom': '1px solid #d6d6d6',
+    'padding': '15px',
+    'fontWeight': 'bold'
+}
+
+tab_selected_style = {
+    'borderTop': '1px solid #d6d6d6',
+    'borderBottom': '1px solid #d6d6d6',
+    'backgroundColor': '#008CBA',
+    'color': 'white',
+    'padding': '15px'
+}
