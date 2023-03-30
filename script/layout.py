@@ -5,13 +5,14 @@ import numpy as np
 import pandas as pd
 from scipy.stats import norm
 
-from dash import Dash, dcc, html, ctx, DiskcacheManager, CeleryManager
+from dash import Dash, dcc, html, ctx, DiskcacheManager, CeleryManager, dash_table
 from dash.dependencies import Input, State, Output
 from dash.exceptions import PreventUpdate
 
 import dash_daq as daq
 
 import plotly.graph_objects as go
+from itertools import repeat
 
 
 # ********** OPTION ENGINE **********
@@ -419,12 +420,27 @@ app.layout = html.Div(
                     id='variables',
                     style={'textAlign': 'center', 'height': '580px', 'width': '27.5%', 'border': '10px solid #F2DFAA'}),
                 html.Div(
-                    dcc.Loading(
-                        id="loading",
-                        children=[example_button, graph_background],
-                        type="graph",
-                        style={'position': 'absolute', 'top': '200px'}
-                    ),
+                    children=[
+                        dcc.Tabs(id="tabs-graph-matrix",
+                                 children=[
+                                     dcc.Tab(label='View Graph',
+                                             children=dcc.Loading(
+                                                 id="loading",
+                                                 children=[example_button, graph_background],
+                                                 type="graph",
+                                                 style={'position': 'absolute', 'top': '200px', }
+                                             ),
+                                             style={'padding': '0', 'line-height': '40px'}
+                                             ),
+                                     dcc.Tab(label='View Matrix',
+                                             id='tab_matrix',
+                                             style={'padding': '0', 'line-height': '40px'}),
+                                 ],
+                                 style={'height': '40px'},
+                                 content_style={'height': '100%'},
+                                 parent_style={'height': '100%'}
+                                 ),
+                    ],
                     id='graph_div',
                     style={'height': '580px', 'width': '69.75%', 'position': 'absolute', 'top': '0px', 'left': '29%',
                            'border': '10px solid #ADD8E6', "overflow": "hidden"}
@@ -531,11 +547,11 @@ def build_figure(result, on):
         X = data.index.values
         Y = data.values.flatten()
         fig = go.Figure(data=go.Scatter(x=X, y=Y, mode='lines'))
-        fig.update_layout(margin={'l': 90, 'r': 50, 'b': 0, 't': 110},
-                          height=550,
+        fig.update_layout(margin={'l': 90, 'r': 50, 'b': 100, 't': 70},
+                          height=540,
                           plot_bgcolor='white',
                           xaxis_title=x,
-                          yaxis_title=on,
+                          yaxis_title=on
                           )
         fig.update_xaxes(
             mirror=True,
@@ -552,24 +568,134 @@ def build_figure(result, on):
             gridcolor='lightgrey'
         )
 
-        return fig
+        return dcc.Graph(figure=fig, style={'position': 'relative'})
 
     elif len(result) == 3:
         data, y, x = result
         fig = go.Figure(data=go.Surface(z=data.values, x=data.columns.values, y=data.index.values))
-        fig.update_layout(margin={'l': 0, 'r': 0, 'b': 0, 't': 0},
-                          height=610
-                          )
+        fig.update_layout(margin={'l': 0, 'r': 0, 'b': 0, 't': 0})
         fig.update_scenes(xaxis_title=x,
                           yaxis_title=y,
                           zaxis_title=on,
                           )
         fig.update_traces(showscale=False)
-        return fig
+
+        return dcc.Graph(figure=fig, config={'scrollZoom': True}, style={'position': 'relative', 'height': '100%'})
+
+
+def datatable_settings_multiindex(df, flatten_char='_'):
+    ''' Plotly dash datatables do not natively handle multiindex dataframes.
+    This function generates a flattend column name list for the dataframe,
+    while structuring the columns to maintain their original multi-level format.
+
+    Function returns the variables datatable_col_list, datatable_data for the columns and data parameters of
+    the dash_table.DataTable'''
+    datatable_col_list = []
+
+    levels = df.columns.nlevels
+    if levels == 1:
+        for i in df.columns:
+            datatable_col_list.append({"name": i, "id": i})
+    else:
+        columns_list = []
+        for i in df.columns:
+            col_id = flatten_char.join(i)
+            datatable_col_list.append({"name": i, "id": col_id})
+            columns_list.append(col_id)
+        df.columns = columns_list
+
+    datatable_data = df.to_dict('records')
+
+    return datatable_data, datatable_col_list
+
+
+def build_matrix(result, dim):
+    if dim == 1:
+
+        data, x = result
+        slices = [int((data.shape[0] - 1) * x) for x in np.linspace(0, 1, 11)]
+        data.index = np.round(data.index, 3).map(str)
+        data.index = pd.MultiIndex.from_tuples(list(zip(repeat(x), data.index)))
+
+        matrix = data.iloc[slices].T.round(3).copy()
+        matrix = matrix.rename(columns={'index': x})
+
+        matrix, columns = datatable_settings_multiindex(matrix)
+
+        return matrix, columns
+
+
+    elif dim == 2:
+        data, y, x = result
+        slices_x = [int((data.shape[0] - 1) * x) for x in np.linspace(0, 1, 11)]
+        slices_y = [int((data.shape[1] - 1) * y) for y in np.linspace(0, 1, 11)]
+
+        data.index = np.round(data.index, 3).map(str)
+        data.columns = np.round(data.columns, 3).map(str)
+        data.columns = pd.MultiIndex.from_tuples(list(zip(repeat(x), data.columns)))
+
+        matrix = data.iloc[slices_x, slices_y].round(3).reset_index().copy()
+        matrix = matrix.rename(columns={'': y, 'index': ''})
+
+        matrix, columns = datatable_settings_multiindex(matrix)
+
+        return matrix, columns
+
+
+def build_table(result, dim):
+    matrix, columns = build_matrix(result, dim)
+    first_col_id = next(iter(matrix[0]))
+
+    if dim == 1:
+        table = dash_table.DataTable(
+            id='table',
+            columns=columns,
+            data=matrix,
+            merge_duplicate_headers=True,
+            style_table={
+                'width': '75%', 'height': '100%',
+                'top': '80px',
+                'marginLeft': 'auto', 'marginRight': 'auto'
+            },
+            style_header={
+                'fontWeight': 'bold',
+                'textAlign': 'center'
+            },
+        )
+
+        return table
+
+    elif dim == 2:
+
+        table = dash_table.DataTable(
+            id='table',
+            columns=columns,
+            data=matrix,
+            merge_duplicate_headers=True,
+            style_table={
+                'width': '75%', 'height': '100%',
+                'top': '80px',
+                'marginLeft': 'auto', 'marginRight': 'auto'
+            },
+            style_header={
+                'fontWeight': 'bold',
+                'textAlign': 'center'
+            },
+            style_cell_conditional=[
+                {
+                    'if': {'column_id': first_col_id},
+                    'textAlign': 'center',
+                    'fontWeight': 'bold'
+                }
+            ]
+        )
+
+        return table
 
 
 @app.callback(
     Output(component_id='loading', component_property='children'),
+    Output(component_id='tab_matrix', component_property='children'),
     Input(component_id='submit', component_property='n_clicks'),
     State(component_id='type', component_property='value'),
     State(component_id='result', component_property='value'),
@@ -616,15 +742,19 @@ def graph(n_clicks, type, on,
     T = extract_value(onT, T, Tm, TM)
 
     if all([type, on, S, K, r, v, T]):
+
         dim = sum([1 for x in [S, K, r, v, T] if isinstance(x, tuple)])
+
         if dim == 1:
             result = sensitivity_2D(type, on, S, K, r, v, T)
-            fig = build_figure(result, on)
-            return dcc.Graph(figure=fig, style={'position': 'relative', 'top': '-30px'})
+            figure = build_figure(result, on)
+            table = build_table(result, dim)
+            return figure, table
         else:
             result = sensitivity_3D(type, on, S, K, r, v, T)
-            fig = build_figure(result, on)
-            return dcc.Graph(figure=fig, config={'scrollZoom': True}, style={'position': 'relative', 'top': '-30px'})
+            figure = build_figure(result, on)
+            table = build_table(result, dim)
+            return figure, table
     else:
         raise PreventUpdate
 
