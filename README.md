@@ -5,5 +5,5 @@ The project is freely available online at the following [website](https://option
 <br><br>
 
 <p align="center"">
-  <img src="fig/website.png" alt="alt text" height=550>
+  <img src="fig/website.png" alt="alt text">
 <p>&nbsp;</p>
