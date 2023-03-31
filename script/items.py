@@ -158,12 +158,12 @@ maturity = [P('Maturity (T)',
                 id='maturity_minmax',
                 style={'display': 'none'})]
 
-button_style = {'position': 'relative', 'top': '440px',
+button_style = {'position': 'relative', 'top': '450px',
                 'border': 'none', 'border-radius': '4px', 'height': '40px', 'width': '80%', 'padding': '0px 45px',
                 'font-size': '20px', 'background-color': '#008CBA', 'color': 'white',
                 'cursor': 'pointer'}
 
-button_style_off = {'position': 'relative', 'top': '440px',
+button_style_off = {'position': 'relative', 'top': '450px',
                     'border': 'none', 'border-radius': '4px', 'height': '40px', 'width': '80%', 'padding': '0px 45px',
                     'font-size': '20px', 'background-color': '#008CBA', 'color': 'white'}
 

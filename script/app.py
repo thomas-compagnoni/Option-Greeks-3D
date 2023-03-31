@@ -92,9 +92,9 @@ def update_output(on):
      Output(component_id='maturity_switch', component_property='on'),
      Output(component_id='type', component_property='value'),
      Output(component_id='result', component_property='value'),
-     Output(component_id='price_min', component_property='value'),
-     Output(component_id='price_max', component_property='value'),
-     Output(component_id='strike', component_property='value'),
+     Output(component_id='price', component_property='value'),
+     Output(component_id='strike_min', component_property='value'),
+     Output(component_id='strike_max', component_property='value'),
      Output(component_id='rf', component_property='value'),
      Output(component_id='sigma', component_property='value'),
      Output(component_id='maturity_min', component_property='value'),
@@ -108,7 +108,7 @@ def update_output(on):
     running=[(Output("example", "disabled"), True, False)]
 )
 def example(n_clicks):
-    return True, False, False, False, True, 'call', 'theta', 10, 100, 50, 0.02, 0.25, 0.1, 3, 1, {'display': 'none'}
+    return False, True, False, False, True, 'call', 'theta', 50, 10, 100, 0.02, 0.25, 0.1, 3, 1, {'display': 'none'}
 
 
 @app.callback(
@@ -166,4 +166,4 @@ def graph(n_clicks, type, on,
 
 
 if __name__ == '__main__':
-    app.run_server()
+    app.run_server(debug=True)

@@ -48,7 +48,7 @@ LAYOUT = Div(
                         id="loading_output",
                         children=[example_button],
                         type="circle",
-                        style={'position': 'absolute', 'top': '280px'}
+                        style={'position': 'absolute', 'top': '260px'}
                     ),
                     id='output',
                     style={'height': px(MAIN_HEIGHT - 20), 'width': '69.75%', 'position': 'absolute', 'top': '0px', 'left': '29%',
@@ -61,18 +61,18 @@ LAYOUT = Div(
             children=[
                 H2(children='HELP', style={'margin-top': '30px', 'textAlign': 'center'}),
                 Ul(children=[
-                    Li("The website is intended to help visualizing the behaviour of option's greeks, "
-                       "as function of 1 or 2 variables of the Black-Scholes model, through graphs and matrices.",
+                    Li("Using graphs and matrices, the website aims to help visualizing the behaviour of option's greeks "
+                       "as function of one or two variables of the Black-Scholes model.",
                        style={'margin-top': '15px'}),
-                    Li("Some brief instructions: ", style={'margin-top': '15px'}),
+                    Li("A few quick instructions: ", style={'margin-top': '15px'}),
                     Ol(children=[
-                        Li("In order for the model to work, all the empty spaces on the left must be filled."),
-                        Li("The switch buttons select the variables of interest. "
-                           "Activate one for 2D graphs, or activate two for 3D graphs. "
-                           "If selected specify the Min and Max values across which to calculate the greek value.",
+                        Li("All of the empty spaces on the left must be filled for the model to work."),
+                        Li("The toggle buttons allow to select the variables of interest. "
+                           "Choose one for 2D graphs or two for 3D graphs. "
+                           "If selected, specify the Min and Max values across which to calculate the greek value.",
                            style={'margin-top': '8px'}),
-                        Li("When you click submit, on the right it will appear the output and you can easily switch "
-                           "between graph and matrix by clicking on the tab on top.",
+                        Li("When you click the submit button, the output will appear on the right. "
+                           "You can simply switch between graph and matrix by clicking the tab at the top.",
                            style={'margin-top': '8px'}),
                     ],
                         style={'margin-top': '10px'},
