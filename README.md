@@ -4,6 +4,6 @@ The project is freely available online at the following [website](https://option
 
 <br><br>
 
-<p align="center" height=500>
-  <img src="fig/website.png" alt="alt text">
+<p align="center">
+  <img src="fig/website.png" alt="alt text" height="400">
 <p>&nbsp;</p>
