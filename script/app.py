@@ -25,7 +25,7 @@ else:
 
 app_title = 'Option Greeks 3D visualizer'
 app_description = 'View and learn Option Greeks!'
-app_image = 'https://i.postimg.cc/xqVzjV17/website.jpg'
+app_image = 'https://i.postimg.cc/wxLQLVs6/website.jpg'
 
 meta_tags = [
     {"name": "viewport", "content": "width=device-width, initial-scale=1"},
