@@ -25,7 +25,7 @@ else:
 
 app_title = 'Option Greeks 3D visualizer'
 app_description = 'View and learn Option Greeks!'
-app_image = 'assets/website.jpg'
+app_image = os.path.join('assets', 'website.jpg')
 
 meta_tags = [
     {"name": "viewport", "content": "width=device-width, initial-scale=1"},
