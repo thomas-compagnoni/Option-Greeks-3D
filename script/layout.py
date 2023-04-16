@@ -10,11 +10,11 @@ LAYOUT = Div(
         Div(id='header',
             children=[
                 Div(
-                    P(children="Welcome to the ultimate Option Greeks 3D Engine!",
+                    P(children="Welcome to the Option Greeks 3D viewer!",
                       style={'font-family': 'Helvetica', 'font-size': '30px', 'font-weight': 'bold', 'color': 'black',
                              'textAlign': 'center', 'margin-top': '40px', 'margin-bottom': '40px'}),
                     id='title',
-                    style={'height': '100%', 'width': '65%', 'position': 'absolute'}
+                    style={'height': '100%', 'width': '60%', 'position': 'absolute'}
                 ),
                 Div(
                     children=[
@@ -25,13 +25,14 @@ LAYOUT = Div(
                                     A('https://github.com/thomas-compagnoni', href='https://github.com/thomas-compagnoni'),
                                     " or follow me on Linkedin ",
                                     A('https://www.linkedin.com/in/thomascompagnoni/', href='https://www.linkedin.com/in/thomascompagnoni/')],
-                          style={'font-family': 'Helvetica', 'margin': '0px', 'textAlign': 'left', 'font-size': '12px', 'color': 'black'}),
+                          style={'font-family': 'Helvetica', 'margin': '0px', 'margin-top': '5px',
+                                 'textAlign': 'left', 'font-size': '12px', 'color': 'black'}),
                         P(children="DISCLAIMER: Only for educational purpose.",
                           style={'font-family': 'Helvetica', 'margin-top': '10px', 'textAlign': 'left',
                                  'padding': '0px 0px', 'font-size': '12px', 'color': 'black'})
                     ],
                     id='info',
-                    style={'left': '65%', 'height': '100%', 'width': '35%', 'position': 'absolute'}),
+                    style={'left': '60%', 'height': '100%', 'width': '40%', 'position': 'absolute'}),
             ],
             style={'position': 'relative', 'height': '115px', 'width': '100%'}
             ),

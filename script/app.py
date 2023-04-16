@@ -23,7 +23,30 @@ else:
     cache = diskcache.Cache("./cache")
     background_callback_manager = DiskcacheManager(cache)
 
-app = Dash(__name__, background_callback_manager=background_callback_manager, prevent_initial_callbacks=True)
+meta_tags = [
+    {
+        "name": "author",
+        "content": "Thomas Compagnoni"
+    },
+    {
+        "name": "title",
+        "content": "OptionGreeks3D",
+    },
+    {
+        "name": "description",
+        "content": "View and learn Option Greeks!",
+    },
+    {
+        'name': 'image',
+        'content': os.path.join(os.path.dirname(os.getcwd()), 'fig', 'website.png')
+    }
+    ]
+
+app = Dash(__name__,
+           meta_tags=meta_tags,
+           background_callback_manager=background_callback_manager,
+           prevent_initial_callbacks=True)
+
 server = app.server
 
 app.layout = LAYOUT
@@ -166,4 +189,4 @@ def graph(n_clicks, type, on,
 
 
 if __name__ == '__main__':
-    app.run_server()
+    app.run_server(debug=True)
