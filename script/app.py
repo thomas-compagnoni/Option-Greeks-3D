@@ -23,24 +23,25 @@ else:
     cache = diskcache.Cache("./cache")
     background_callback_manager = DiskcacheManager(cache)
 
+app_title = 'Option Greeks 3D visualizer'
+app_description = 'View and learn Option Greeks!'
+app_image = 'https://github.com/thomas-compagnoni/Option-Greeks-3D/blob/main/fig/website.png'
+
 meta_tags = [
-    {
-        "name": "author",
-        "content": "Thomas Compagnoni"
-    },
-    {
-        "name": "title",
-        "content": "OptionGreeks3D",
-    },
-    {
-        "name": "description",
-        "content": "View and learn Option Greeks!",
-    },
-    {
-        'name': 'image',
-        'content': os.path.join(os.path.dirname(os.getcwd()), 'fig', 'website.png')
-    }
-    ]
+    {"name": "viewport", "content": "width=device-width, initial-scale=1"},
+    {"name": "author", "content": "Thomas Compagnoni"},
+    {"property": "twitter:title", "content": app_title},
+    {"property": "twitter:description", "content": app_description},
+    {"property": "twitter:image", "content": app_image},
+    {"property": "twitter:image:width", "content": "1200"},
+    {"property": "twitter:image:height", "content": "630"},
+    {"property": "og:title", "content": app_title},
+    {"property": "og:type", "content": "website"},
+    {"property": "og:description", "content": app_description},
+    {"property": "og:image", "content": app_image},
+    {"property": "og:image:width", "content": "1200"},
+    {"property": "og:image:height", "content": "630"}
+]
 
 app = Dash(__name__,
            meta_tags=meta_tags,
@@ -48,7 +49,6 @@ app = Dash(__name__,
            prevent_initial_callbacks=True)
 
 server = app.server
-
 app.layout = LAYOUT
 
 
