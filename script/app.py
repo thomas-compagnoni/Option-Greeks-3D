@@ -25,7 +25,7 @@ else:
 
 app_title = 'Option Greeks 3D visualizer'
 app_description = 'View and learn Option Greeks!'
-app_image = os.path.join('assets', 'website.jpg')
+app_image = 'assets/website.jpg'
 
 meta_tags = [
     {"name": "viewport", "content": "width=device-width, initial-scale=1"},
@@ -50,6 +50,9 @@ app = Dash(__name__,
 
 server = app.server
 app.layout = LAYOUT
+
+app.title = 'OptionGreeks3D'
+# app._favicon = (os.path.join('assets', 'your_icon.ico'))
 
 
 @app.callback(
