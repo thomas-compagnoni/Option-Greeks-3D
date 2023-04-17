@@ -28,7 +28,7 @@ app_description = 'View and learn Option Greeks!'
 app_image = 'https://i.postimg.cc/Rhk4nNy2/website-3-1.jpg'
 
 meta_tags = [
-    {"name": "viewport", "content": "width=device-width, initial-scale=1"},
+    {"name": "viewport", "content": "width=1100px, initial-scale=1"},
     {"name": "author", "content": "Thomas Compagnoni"},
     {"property": "twitter:card", "content": "summary_large_image"},
     {"property": "twitter:title", "content": app_title},
