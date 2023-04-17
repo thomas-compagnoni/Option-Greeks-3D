@@ -73,7 +73,7 @@ def sensitivity_2D(type, on, S, K, r, volatility, T, n2D=500):
     return pd.DataFrame(Y, index=X), sens_variable[2]
 
 
-def sensitivity_3D(type, on, S, K, r, volatility, T, n3D=40):
+def sensitivity_3D(type, on, S, K, r, volatility, T, n3D=50):
     variables_lookup = ['Underlying price (S)', 'Strike (K)', 'Risk-free (r)', 'Volatility (σ)', 'Maturity (T)']
     variables = [S, K, r, volatility, T]
 

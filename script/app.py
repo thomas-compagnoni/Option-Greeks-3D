@@ -25,7 +25,7 @@ else:
 
 app_title = 'Option Greeks 3D visualizer'
 app_description = 'View and learn Option Greeks!'
-app_image = 'https://i.postimg.cc/wxLQLVs6/website.jpg'
+app_image = 'https://i.postimg.cc/Rhk4nNy2/website-3-1.jpg'
 
 meta_tags = [
     {"name": "viewport", "content": "width=device-width, initial-scale=1"},
@@ -35,13 +35,13 @@ meta_tags = [
     {"property": "twitter:description", "content": app_description},
     {"property": "twitter:image", "content": app_image},
     {"property": "twitter:image:width", "content": "1200"},
-    {"property": "twitter:image:height", "content": "630"},
+    {"property": "twitter:image:height", "content": "619"},
     {"property": "og:title", "content": app_title},
     {"property": "og:type", "content": "website"},
     {"property": "og:description", "content": app_description},
     {"property": "og:image", "content": app_image},
     {"property": "og:image:width", "content": "1200"},
-    {"property": "og:image:height", "content": "630"}
+    {"property": "og:image:height", "content": "619"}
 ]
 
 app = Dash(__name__,
@@ -51,9 +51,7 @@ app = Dash(__name__,
 
 server = app.server
 app.layout = LAYOUT
-
 app.title = 'OptionGreeks3D'
-# app._favicon = (os.path.join('assets', 'your_icon.ico'))
 
 
 @app.callback(
